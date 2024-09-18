@@ -6,10 +6,12 @@ import Register from './components/Register';
 import { BrowserRouter } from 'react-router-dom';
 import { Route , Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar/>
       <div className='container-fluid'>
         <Routes>
           <Route path='/' exact element={<Login/>}/>
