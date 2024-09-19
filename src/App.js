@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path='/' exact element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
-          <Route path='/dashnoard' element={<Dashboard/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='*' element={<Nomatchpage/>}/>
         </Routes>
       </div>

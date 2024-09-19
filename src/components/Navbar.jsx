@@ -27,7 +27,7 @@ function Navbar() {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link text-white" activClassName='active' to="/login">
+            <NavLink className="nav-link text-white" activClassName='active' to="/">
               Login
             </NavLink>
           </li>
