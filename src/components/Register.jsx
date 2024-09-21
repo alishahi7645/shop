@@ -7,7 +7,7 @@ function Register() {
 
   return (
     <div>
-      Rwgister
+      
     </div>
   )
 }
