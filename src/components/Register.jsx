@@ -22,6 +22,38 @@ function Register() {
     { id: 9, countryName: "Brazil" },
     { id: 10, countryName: "canada" },
   ]);
+
+  const [errors , setErrors] = useState({
+    email: [],
+    password: [],
+    fullName: [],
+    dateOfBirth: [],
+    gender: [],
+    country: [],
+    reciveNewsLetters: [],
+  })
+  const [dirty , setDirty] = useState({
+    email: false,
+    password: false,
+    fullName: false,
+    dateOfBirth: false,
+    gender: false,
+    country: false,
+    reciveNewsLetters: false,
+  });
+  const [message , setMessage] = useState("");
+
+  const validate = () =>{
+    let errorsData = {};
+
+    //email
+    errorsData.email = [];
+
+    //email can`t blank
+    if(!state.email){
+      errorsData.email.push("Email can`t be blank")
+    }
+  }
   useEffect(() => {
     document.title = "register";
   }, []);
