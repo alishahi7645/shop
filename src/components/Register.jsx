@@ -1,3 +1,4 @@
+import { error } from "jquery";
 import React, { useEffect, useState } from "react";
 
 function Register() {
@@ -53,10 +54,104 @@ function Register() {
     if(!state.email){
       errorsData.email.push("Email can`t be blank")
     }
+
+    //email regex
+    const validEmailRegex = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+(]-.\w+)*/;
+    if(state.email){
+      if(!validEmailRegex.test(state.email)){
+        errorsData.email.push("Proper email address is expacted")
+      }
+    }
+
+    //password
+    errorsData.password = [];
+
+    //password can`t blank
+    if(!state.password){
+      errorsData.password.push("Password can`t be blank")
+    }
+
+    //password regex
+    const validPasswordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15})/;
+    if(state.password){
+      if(!validPasswordRegex.test(state.password)){
+        errorsData.email.push("Password should be 6 to 15 characters long with at least one uppercase letter, one lowercase letter and one digit")
+      }
+    }
+
+
+    //fullname
+    errorsData.fullName = [];
+
+    //fullname can`t blank
+    if(!state.fullName){
+      errorsData.fullName.push("fullName can`t be blank")
+    }
+
+    //dateOfBirth
+    errorsData.dateOfBirth = [];
+
+    //dateOfBirth can`t blank
+    if(!state.dateOfBirth){
+      errorsData.dateOfBirth.push("Date Of Birth can`t be blank")
+    }
+
+
+    //gender
+    errorsData.gender = [];
+
+    //gender can`t blank
+    if(!state.gender){
+      errorsData.gender.push("Please select gender either male or female")
+    }
+
+
+    //country
+    errorsData.country = [];
+
+    //country can`t blank
+    if(!state.country){
+      errorsData.country.push("Please select a country")
+    }
+
+    setErrors(errorsData)
   }
+
+  useEffect(validate,[state])
   useEffect(() => {
     document.title = "register";
   }, []);
+
+  const onRegisterClick = () =>{
+    let dirtyData = dirty;
+
+    Object.keys(dirty).forEach((control) => {
+      dirtyData[control] = true;
+    })
+    setDirty(dirtyData)
+    validate();
+
+    if(isValid()){
+      setMessage(
+        <span className="text-success">Success</span>
+      )
+    }else{
+      setMessage(
+        <span className="text-danger">Errors</span>
+      )
+    }
+  }
+
+  const isValid = () => {
+    let valid = true;
+    for(let control in errors){
+      if(errors[control].length > 0){
+        valid = false;
+      }
+    }
+
+    return valid;
+  }
 
   return (
     <div className="row">
@@ -69,6 +164,17 @@ function Register() {
             >
               Register
             </h4>
+            <ul className="text-danger">
+              {Object.keys(errors).map((control) =>{
+                if(dirty[control]){
+                  return errors[control].map((err) => {
+                    return <li key={err}>{err}</li>
+                  })
+                }else{
+                  return "";
+                }
+              })}
+            </ul>
           </div>
           <div className="card-body border-primary">
             {/* email */}
@@ -105,15 +211,15 @@ function Register() {
             </div>
             {/* fullname */}
             <div className="form-group form-row">
-              <label htmlFor="fullname" className="col-lg-4 mb-1">
+              <label htmlFor="fullName" className="col-lg-4 mb-1">
                 Full Name
               </label>
               <input
                 type="text"
                 className="form-control mb-1"
-                id="fullname"
+                id="fullName"
                 value={state.fullName}
-                name="fullname"
+                name="fullName"
                 onChange={(e) =>
                   setState({ ...state, [e.target.name]: e.target.value })
                 }
@@ -224,6 +330,16 @@ function Register() {
               </div>
             </div>
           </div>
+          {/* footer */}
+          <div className="card-footer text-center">
+            <div className="m-1">{message}</div>
+            <div>
+              <button className="btn btn-primary m-2" onClick={onRegisterClick}>
+                Register
+              </button>
+            </div>
+          </div>
+          {/* end of footer */}
         </div>
       </div>
     </div>
